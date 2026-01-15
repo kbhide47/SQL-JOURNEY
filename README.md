@@ -14,5 +14,5 @@ Goal:
 - Maintain a GitHub streak  
 - Create a public SQL portfolio  
 
-## Structure
+
 
