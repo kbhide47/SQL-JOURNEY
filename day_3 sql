@@ -1,0 +1,42 @@
+-- Day 03: AND, OR, NOT practice
+-- Table used: employees(emp_id, name, age, department, designation, salary, city)
+
+-- 1. Show employees who are in IT department and live in Pune
+SELECT * FROM employees
+WHERE department = 'IT' AND city = 'Pune';
+
+-- 2. Display employees who are in HR and have salary less than 40,000
+SELECT * FROM employees
+WHERE department = 'HR' AND salary < 40000;
+
+-- 3. Fetch employees who are in IT or Marketing department
+SELECT * FROM employees
+WHERE department = 'IT' OR department = 'Marketing';
+
+-- 4. Show employees who live in Pune or Mumbai
+SELECT * FROM employees
+WHERE city = 'Pune' OR city = 'Mumbai';
+
+-- 5. Display employees whose salary is greater than 50,000 and age is above 30
+SELECT * FROM employees
+WHERE salary > 50000 AND age > 30;
+
+-- 6. Show employees who are not in the IT department
+SELECT * FROM employees
+WHERE NOT department = 'IT';
+
+-- 7. Display employees who do not live in Pune
+SELECT * FROM employees
+WHERE NOT city = 'Pune';
+
+-- 8. Fetch employees who are in Finance and not from Mumbai
+SELECT * FROM employees
+WHERE department = 'Finance' AND NOT city = 'Mumbai';
+
+-- 9. Show employees whose department is not HR
+SELECT * FROM employees
+WHERE department <> 'HR';
+
+-- 10. Display employees who are not in Marketing and have salary greater than 40,000
+SELECT * FROM employees
+WHERE NOT department = 'Marketing' AND salary > 40000;
