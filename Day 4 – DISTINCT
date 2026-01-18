@@ -1,0 +1,35 @@
+-- Day 04: DISTINCT practice
+-- Table used: employees(emp_id, name, age, department, designation, salary, city)
+
+-- 1. Display all unique departments
+SELECT DISTINCT department FROM employees;
+
+-- 2. Show all different cities
+SELECT DISTINCT city FROM employees;
+
+-- 3. Fetch all unique designations
+SELECT DISTINCT designation FROM employees;
+
+-- 4. Display all distinct ages
+SELECT DISTINCT age FROM employees;
+
+-- 5. Show unique salary values
+SELECT DISTINCT salary FROM employees;
+
+-- 6. Display unique department–city combinations
+SELECT DISTINCT department, city FROM employees;
+
+-- 7. Fetch distinct department names only
+SELECT DISTINCT department FROM employees;
+
+-- 8. Show distinct city names in alphabetical order
+SELECT DISTINCT city FROM employees
+ORDER BY city ASC;
+
+-- 9. Display unique designations from the IT department
+SELECT DISTINCT designation FROM employees
+WHERE department = 'IT';
+
+-- 10. Show distinct departments where salary is greater than 40,000
+SELECT DISTINCT department FROM employees
+WHERE salary > 40000;
