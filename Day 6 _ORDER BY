@@ -1,0 +1,44 @@
+-- Day 06: ORDER BY practice
+-- Table used: employees(emp_id, name, age, department, designation, salary, city)
+
+-- 1. Display all employees ordered by name in ascending order
+SELECT * FROM employees
+ORDER BY name ASC;
+
+-- 2. Show all employees ordered by salary in descending order
+SELECT * FROM employees
+ORDER BY salary DESC;
+
+-- 3. Fetch employees ordered by age (youngest first)
+SELECT * FROM employees
+ORDER BY age ASC;
+
+-- 4. Display employees ordered by city in alphabetical order
+SELECT * FROM employees
+ORDER BY city ASC;
+
+-- 5. Show employees from IT department ordered by salary (high to low)
+SELECT * FROM employees
+WHERE department = 'IT'
+ORDER BY salary DESC;
+
+-- 6. Fetch employees ordered by age (oldest first)
+SELECT * FROM employees
+ORDER BY age DESC;
+
+-- 7. Display employees ordered by department in ascending order
+SELECT * FROM employees
+ORDER BY department ASC;
+
+-- 8. Show employees ordered by designation alphabetically
+SELECT * FROM employees
+ORDER BY designation ASC;
+
+-- 9. Fetch employees from Pune ordered by salary (low to high)
+SELECT * FROM employees
+WHERE city = 'Pune'
+ORDER BY salary ASC;
+
+-- 10. Display employees ordered by emp_id in descending order
+SELECT * FROM employees
+ORDER BY emp_id DESC;
