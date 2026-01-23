@@ -1,0 +1,46 @@
+-- Day 09: AVG(), MIN(), MAX() practice
+-- Table used: employees(emp_id, name, age, department, designation, salary, city)
+
+-- 1. Find the average salary of all employees
+SELECT AVG(salary) AS avg_salary
+FROM employees;
+
+-- 2. Calculate the average salary of IT department employees
+SELECT AVG(salary) AS it_avg_salary
+FROM employees
+WHERE department = 'IT';
+
+-- 3. Find the average age of all employees
+SELECT AVG(age) AS avg_age
+FROM employees;
+
+-- 4. Find the minimum salary in the company
+SELECT MIN(salary) AS min_salary
+FROM employees;
+
+-- 5. Find the minimum age among employees
+SELECT MIN(age) AS min_age
+FROM employees;
+
+-- 6. Find the lowest salary in HR department
+SELECT MIN(salary) AS hr_min_salary
+FROM employees
+WHERE department = 'HR';
+
+-- 7. Find the maximum salary in the company
+SELECT MAX(salary) AS max_salary
+FROM employees;
+
+-- 8. Find the maximum age among employees
+SELECT MAX(age) AS max_age
+FROM employees;
+
+-- 9. Find the highest salary in IT department
+SELECT MAX(salary) AS it_max_salary
+FROM employees
+WHERE department = 'IT';
+
+-- 10. Find the average salary for each department
+SELECT department, AVG(salary) AS avg_salary
+FROM employees
+GROUP BY department;
