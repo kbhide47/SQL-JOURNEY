@@ -1,0 +1,56 @@
+1️⃣ Employee name and department name (INNER JOIN)
+SELECT e.name, d.department_name
+FROM employees e
+INNER JOIN departments d
+ON e.department_id = d.department_id;
+2️⃣ All employees with department names (including no department)
+SELECT e.name, d.department_name
+FROM employees e
+RIGHT JOIN departments d
+ON e.department_id = d.department_id;
+3️⃣ All departments with employees (including no employees)
+SELECT e.name, d.department_name
+FROM employees e
+RIGHT JOIN departments d
+ON e.department_id = d.department_id;
+4️⃣ Employees without any department
+SELECT name
+FROM employees
+WHERE department_id IS NULL;
+5️⃣ Departments with no employees
+SELECT d.department_name
+FROM departments d
+LEFT JOIN employees e
+ON d.department_id = e.department_id
+WHERE e.emp_id IS NULL;
+6️⃣ Employee name, department name, and manager
+SELECT e.name, d.department_name, d.manager
+FROM employees e
+INNER JOIN departments d
+ON e.department_id = d.department_id;
+7️⃣ Employees working under manager 'Amit'
+SELECT e.name
+FROM employees e
+INNER JOIN departments d
+ON e.department_id = d.department_id
+WHERE d.manager = 'Amit';
+8️⃣ Total number of employees in each department
+SELECT d.department_name, COUNT(e.emp_id) AS total_employees
+FROM departments d
+LEFT JOIN employees e
+ON d.department_id = e.department_id
+GROUP BY d.department_name;
+9️⃣ Departments having more than one employee
+SELECT d.department_name, COUNT(e.emp_id) AS total_employees
+FROM departments d
+INNER JOIN employees e
+ON d.department_id = e.department_id
+GROUP BY d.department_name
+HAVING COUNT(e.emp_id) > 1;
+🔟 Employees working in IT department
+SELECT e.name
+FROM employees e
+INNER JOIN departments d
+ON e.department_id = d.department_id
+WHERE d.department_name = 'IT';
+
