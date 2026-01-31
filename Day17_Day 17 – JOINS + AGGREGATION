@@ -1,0 +1,86 @@
+-- =========================================
+-- Day 17: SQL JOINS + AGGREGATION
+-- Tables:
+-- employees(emp_id, name, department_id, salary, city)
+-- departments(department_id, department_name, manager)
+-- =========================================
+
+
+-- 1. Count employees in each department
+SELECT d.department_name, COUNT(e.emp_id) AS total_employees
+FROM departments d
+LEFT JOIN employees e
+ON d.department_id = e.department_id
+GROUP BY d.department_name;
+
+
+-- 2. Find the average salary of each department
+SELECT d.department_name, AVG(e.salary) AS avg_salary
+FROM departments d
+INNER JOIN employees e
+ON d.department_id = e.department_id
+GROUP BY d.department_name;
+
+
+-- 3. Display departments having more than 2 employees
+SELECT d.department_name, COUNT(e.emp_id) AS total_employees
+FROM departments d
+INNER JOIN employees e
+ON d.department_id = e.department_id
+GROUP BY d.department_name
+HAVING COUNT(e.emp_id) > 2;
+
+
+-- 4. Find the department with the highest total salary
+SELECT d.department_name, SUM(e.salary) AS total_salary
+FROM departments d
+INNER JOIN employees e
+ON d.department_id = e.department_id
+GROUP BY d.department_name
+ORDER BY total_salary DESC
+LIMIT 1;
+
+
+-- 5. Display manager-wise employee count
+SELECT d.manager, COUNT(e.emp_id) AS total_employees
+FROM departments d
+LEFT JOIN employees e
+ON d.department_id = e.department_id
+GROUP BY d.manager;
+
+
+-- 6. Show employees working under manager 'Amit' with their salary
+SELECT e.name, e.salary
+FROM employees e
+INNER JOIN departments d
+ON e.department_id = d.department_id
+WHERE d.manager = 'Amit';
+
+
+-- 7. Find average salary city-wise
+SELECT e.city, AVG(e.salary) AS avg_salary
+FROM employees e
+GROUP BY e.city;
+
+
+-- 8. Display departments where average salary is greater than 50,000
+SELECT d.department_name, AVG(e.salary) AS avg_salary
+FROM departments d
+INNER JOIN employees e
+ON d.department_id = e.department_id
+GROUP BY d.department_name
+HAVING AVG(e.salary) > 50000;
+
+
+-- 9. Display employee count department-wise (including departments with zero employees)
+SELECT d.department_name, COUNT(e.emp_id) AS total_employees
+FROM departments d
+LEFT JOIN employees e
+ON d.department_id = e.department_id
+GROUP BY d.department_name;
+
+
+-- 10. Find the highest salary in each city
+SELECT e.city, MAX(e.salary) AS highest_salary
+FROM employees e
+GROUP BY e.city;
