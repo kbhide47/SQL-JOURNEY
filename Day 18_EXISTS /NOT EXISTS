@@ -1,0 +1,116 @@
+-- =========================================
+-- Day 18: SQL EXISTS & NOT EXISTS
+-- Table: employees(emp_id, name, department, salary, city)
+-- =========================================
+
+
+-- 1. Find employees who belong to a department that exists in the employees table
+SELECT *
+FROM employees e
+WHERE EXISTS (
+    SELECT 1
+    FROM employees
+    WHERE department = e.department
+);
+
+
+-- 2. Find employees who do NOT belong to any department
+SELECT *
+FROM employees e
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM employees
+    WHERE department = e.department
+    AND department IS NOT NULL
+);
+
+
+-- 3. Display departments that have at least one employee earning more than 60,000
+SELECT DISTINCT department
+FROM employees e
+WHERE EXISTS (
+    SELECT 1
+    FROM employees
+    WHERE department = e.department
+    AND salary > 60000
+);
+
+
+-- 4. Find employees who work in departments having more than 2 employees
+SELECT *
+FROM employees e
+WHERE EXISTS (
+    SELECT 1
+    FROM employees
+    GROUP BY department
+    HAVING COUNT(*) > 2
+    AND department = e.department
+);
+
+
+-- 5. Find employees whose salary is greater than the average salary of their department
+SELECT *
+FROM employees e
+WHERE EXISTS (
+    SELECT 1
+    FROM employees
+    WHERE department = e.department
+    GROUP BY department
+    HAVING AVG(salary) < e.salary
+);
+
+
+-- 6. Find employees who work in cities where at least one employee earns more than 70,000
+SELECT *
+FROM employees e
+WHERE EXISTS (
+    SELECT 1
+    FROM employees
+    WHERE city = e.city
+    AND salary > 70000
+);
+
+
+-- 7. Find employees who are NOT the highest paid in their department
+SELECT *
+FROM employees e
+WHERE EXISTS (
+    SELECT 1
+    FROM employees
+    WHERE department = e.department
+    AND salary > e.salary
+);
+
+
+-- 8. Display employees who are the highest paid in their department
+SELECT *
+FROM employees e
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM employees
+    WHERE department = e.department
+    AND salary > e.salary
+);
+
+
+-- 9. Find departments where no employee earns less than 40,000
+SELECT DISTINCT department
+FROM employees e
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM employees
+    WHERE department = e.department
+    AND salary < 40000
+);
+
+
+-- 10. Find employees who work in departments that have employees from more than one city
+SELECT *
+FROM employees e
+WHERE EXISTS (
+    SELECT 1
+    FROM employees
+    WHERE department = e.department
+    GROUP BY department
+    HAVING COUNT(DISTINCT city) > 1
+);
