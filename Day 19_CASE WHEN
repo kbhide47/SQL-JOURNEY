@@ -1,0 +1,106 @@
+-- =========================================
+-- Day 19: SQL CASE WHEN
+-- Table: employees(emp_id, name, department, salary, city)
+-- =========================================
+
+
+-- 1. Display employee name, salary, and salary category
+--    (High > 60000, Medium 40000–60000, Low < 40000)
+SELECT name, salary,
+       CASE
+           WHEN salary > 60000 THEN 'High'
+           WHEN salary BETWEEN 40000 AND 60000 THEN 'Medium'
+           ELSE 'Low'
+       END AS salary_category
+FROM employees;
+
+
+-- 2. Display employee name and a remark based on department
+--    (IT → Tech, HR → People, Others → Other)
+SELECT name, department,
+       CASE
+           WHEN department = 'IT' THEN 'Tech'
+           WHEN department = 'HR' THEN 'People'
+           ELSE 'Other'
+       END AS department_type
+FROM employees;
+
+
+-- 3. Display employee name and tax percentage
+--    (> 60000 → 20%, 40000–60000 → 10%, < 40000 → 5%)
+SELECT name, salary,
+       CASE
+           WHEN salary > 60000 THEN '20%'
+           WHEN salary BETWEEN 40000 AND 60000 THEN '10%'
+           ELSE '5%'
+       END AS tax_percentage
+FROM employees;
+
+
+-- 4. Display employee name and salary after bonus
+--    (IT → +5000, HR → +3000, Others → +2000)
+SELECT name, department, salary,
+       CASE
+           WHEN department = 'IT' THEN salary + 5000
+           WHEN department = 'HR' THEN salary + 3000
+           ELSE salary + 2000
+       END AS salary_after_bonus
+FROM employees;
+
+
+-- 5. Display employee name and experience level
+--    (> 50000 → Senior, else Junior)
+SELECT name, salary,
+       CASE
+           WHEN salary > 50000 THEN 'Senior'
+           ELSE 'Junior'
+       END AS experience_level
+FROM employees;
+
+
+-- 6. Display employee name and city category
+--    (Mumbai/Pune → Metro, Others → Non-Metro)
+SELECT name, city,
+       CASE
+           WHEN city IN ('Mumbai', 'Pune') THEN 'Metro'
+           ELSE 'Non-Metro'
+       END AS city_type
+FROM employees;
+
+
+-- 7. Display employee name and performance grade
+--    (> 65000 → A, 50000–65000 → B, < 50000 → C)
+SELECT name, salary,
+       CASE
+           WHEN salary > 65000 THEN 'A'
+           WHEN salary BETWEEN 50000 AND 65000 THEN 'B'
+           ELSE 'C'
+       END AS performance_grade
+FROM employees;
+
+
+-- 8. Display employee name and salary status
+--    (Even salary → Even, Odd salary → Odd)
+SELECT name, salary,
+       CASE
+           WHEN MOD(salary, 2) = 0 THEN 'Even'
+           ELSE 'Odd'
+       END AS salary_status
+FROM employees;
+
+
+-- 9. Display employee name and promotion eligibility
+--    (IT & salary > 55000 → Eligible, else Not Eligible)
+SELECT name, department, salary,
+       CASE
+           WHEN department = 'IT' AND salary > 55000 THEN 'Eligible'
+           ELSE 'Not Eligible'
+       END AS promotion_status
+FROM employees;
+
+
+-- 10. Display employee name and salary hike percentage
+--     (> 60000 → 15%, 45000–60000 → 10%, else 5%)
+SELECT name, salary,
+       CASE
+           W
