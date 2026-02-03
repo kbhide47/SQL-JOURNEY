@@ -1,0 +1,68 @@
+-- =========================================
+-- Day 20: SQL Window Functions
+-- Table: employees(emp_id, name, department, salary, city)
+-- =========================================
+
+
+-- 1. Assign a unique row number to each employee based on salary (highest first)
+SELECT emp_id, name, salary,
+       ROW_NUMBER() OVER (ORDER BY salary DESC) AS row_num
+FROM employees;
+
+
+-- 2. Rank employees based on salary (highest salary gets rank 1)
+SELECT emp_id, name, salary,
+       RANK() OVER (ORDER BY salary DESC) AS salary_rank
+FROM employees;
+
+
+-- 3. Rank employees based on salary without gaps in ranking
+SELECT emp_id, name, salary,
+       DENSE_RANK() OVER (ORDER BY salary DESC) AS dense_salary_rank
+FROM employees;
+
+
+-- 4. Display employee salary along with previous employee’s salary
+SELECT emp_id, name, salary,
+       LAG(salary) OVER (ORDER BY salary) AS previous_salary
+FROM employees;
+
+
+-- 5. Display employee salary along with next employee’s salary
+SELECT emp_id, name, salary,
+       LEAD(salary) OVER (ORDER BY salary) AS next_salary
+FROM employees;
+
+
+-- 6. Rank employees within each department based on salary
+SELECT emp_id, name, department, salary,
+       RANK() OVER (PARTITION BY department ORDER BY salary DESC) AS dept_rank
+FROM employees;
+
+
+-- 7. Find the highest paid employee in each department
+SELECT *
+FROM (
+    SELECT emp_id, name, department, salary,
+           RANK() OVER (PARTITION BY department ORDER BY salary DESC) AS rnk
+    FROM employees
+) t
+WHERE rnk = 1;
+
+
+-- 8. Calculate average salary of each department using window function
+SELECT emp_id, name, department, salary,
+       AVG(salary) OVER (PARTITION BY department) AS dept_avg_salary
+FROM employees;
+
+
+-- 9. Show salary difference between employee salary and department average
+SELECT emp_id, name, department, salary,
+       salary - AVG(salary) OVER (PARTITION BY department) AS diff_from_avg
+FROM employees;
+
+
+-- 10. Calculate cumulative salary ordered by salary
+SELECT emp_id, name, salary,
+       SUM(salary) OVER (ORDER BY salary) AS cumulative_salary
+FROM employees;
