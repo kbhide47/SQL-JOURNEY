@@ -1,0 +1,63 @@
+-- =========================================
+-- Day 21: SQL DATE FUNCTIONS
+-- Table: employees(emp_id, name, department, salary, city, joining_date)
+-- =========================================
+
+
+-- 1. Display employee name and joining date
+SELECT name, joining_date
+FROM employees;
+
+
+-- 2. Display employees who joined in the year 2023
+SELECT *
+FROM employees
+WHERE YEAR(joining_date) = 2023;
+
+
+-- 3. Display employees who joined in the month of January
+SELECT *
+FROM employees
+WHERE MONTH(joining_date) = 1;
+
+
+-- 4. Display employee name and number of years completed in the company
+SELECT name,
+       TIMESTAMPDIFF(YEAR, joining_date, CURDATE()) AS years_completed
+FROM employees;
+
+
+-- 5. Display employees who joined in the last 6 months
+SELECT *
+FROM employees
+WHERE joining_date >= DATE_SUB(CURDATE(), INTERVAL 6 MONTH);
+
+
+-- 6. Display employee name and joining day (Monday, Tuesday, etc.)
+SELECT name,
+       DAYNAME(joining_date) AS joining_day
+FROM employees;
+
+
+-- 7. Display employees who joined after 1st Jan 2022
+SELECT *
+FROM employees
+WHERE joining_date > '2022-01-01';
+
+
+-- 8. Display employee name and formatted joining date (DD-MM-YYYY)
+SELECT name,
+       DATE_FORMAT(joining_date, '%d-%m-%Y') AS formatted_date
+FROM employees;
+
+
+-- 9. Display employees who completed more than 2 years in the company
+SELECT *
+FROM employees
+WHERE TIMESTAMPDIFF(YEAR, joining_date, CURDATE()) > 2;
+
+
+-- 10. Display employee name and total number of days worked in the company
+SELECT name,
+       DATEDIFF(CURDATE(), joining_date) AS total_days_worked
+FROM employees;
