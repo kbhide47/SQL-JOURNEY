@@ -1,0 +1,62 @@
+-- =========================================
+-- Day 25: SQL Indexes & Optimization
+-- Table: employees(emp_id, name, department, salary, city, joining_date)
+-- =========================================
+
+
+-- 1. Create an index on emp_id column
+CREATE INDEX idx_emp_id
+ON employees(emp_id);
+
+
+-- 2. Create an index on department column
+CREATE INDEX idx_department
+ON employees(department);
+
+
+-- 3. Create a composite index on department and salary
+CREATE INDEX idx_department_salary
+ON employees(department, salary);
+
+
+-- 4. Drop an index from the employees table
+DROP INDEX idx_department_salary
+ON employees;
+
+
+-- 5. Display all indexes on the employees table
+SHOW INDEX FROM employees;
+
+
+-- 6. Explain the execution plan for a query filtering by department
+EXPLAIN
+SELECT *
+FROM employees
+WHERE department = 'IT';
+
+
+-- 7. Explain query execution plan for salary condition
+EXPLAIN
+SELECT *
+FROM employees
+WHERE salary > 50000;
+
+
+-- 8. Optimize query to fetch employees from IT department earning more than 50,000
+-- (Use indexed columns)
+SELECT *
+FROM employees
+WHERE department = 'IT'
+AND salary > 50000;
+
+
+-- 9. Avoid SELECT * and fetch only required columns
+SELECT emp_id, name, salary
+FROM employees
+WHERE department = 'HR';
+
+
+-- 10. Find employees who joined after 2022 using indexed joining_date
+SELECT *
+FROM employees
+WHERE joining_date > '2022-01-01';
