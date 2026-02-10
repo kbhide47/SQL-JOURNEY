@@ -1,0 +1,77 @@
+-- =========================================
+-- Day 27: SQL Case Study – Employee Performance Analysis
+-- Table: employees
+-- Columns:
+-- emp_id, name, department, designation, salary, city, joining_date
+-- =========================================
+
+
+-- 1. Find total number of employees in the company
+SELECT COUNT(*) AS total_employees
+FROM employees;
+
+
+-- 2. Find department-wise employee count
+SELECT department, COUNT(*) AS employee_count
+FROM employees
+GROUP BY department;
+
+
+-- 3. Find department-wise average salary
+SELECT department, AVG(salary) AS avg_salary
+FROM employees
+GROUP BY department;
+
+
+-- 4. Find the highest paid employee in each department
+SELECT *
+FROM employees e
+WHERE salary = (
+    SELECT MAX(salary)
+    FROM employees
+    WHERE department = e.department
+);
+
+
+-- 5. Find employees earning more than company average salary
+SELECT *
+FROM employees
+WHERE salary > (SELECT AVG(salary) FROM employees);
+
+
+-- 6. Find the department with the highest total salary expense
+SELECT department, SUM(salary) AS total_salary
+FROM employees
+GROUP BY department
+ORDER BY total_salary DESC
+LIMIT 1;
+
+
+-- 7. Find city-wise average salary
+SELECT city, AVG(salary) AS avg_salary
+FROM employees
+GROUP BY city;
+
+
+-- 8. Categorize employees based on salary
+-- High > 60000, Medium 40000–60000, Low < 40000
+SELECT name, salary,
+       CASE
+           WHEN salary > 60000 THEN 'High'
+           WHEN salary BETWEEN 40000 AND 60000 THEN 'Medium'
+           ELSE 'Low'
+       END AS salary_category
+FROM employees;
+
+
+-- 9. Find employees who joined in the last 2 years
+SELECT *
+FROM employees
+WHERE joining_date >= DATE_SUB(CURDATE(), INTERVAL 2 YEAR);
+
+
+-- 10. Find top 5 highest paid employees
+SELECT *
+FROM employees
+ORDER BY salary DESC
+LIMIT 5;
