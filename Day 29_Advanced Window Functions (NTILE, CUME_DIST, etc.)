@@ -1,0 +1,47 @@
+-- Assume table: students(id, name, marks, branch)
+
+-- 1️⃣ Show all students
+SELECT * 
+FROM students;
+
+-- 2️⃣ Show only name and marks
+SELECT name, marks 
+FROM students;
+
+-- 3️⃣ Show students scoring more than 75
+SELECT * 
+FROM students
+WHERE marks > 75;
+
+-- 4️⃣ Count total students
+SELECT COUNT(*) AS total_students
+FROM students;
+
+-- 5️⃣ Find highest marks
+SELECT MAX(marks) AS highest_marks
+FROM students;
+
+-- 6️⃣ Find average marks
+SELECT AVG(marks) AS avg_marks
+FROM students;
+
+-- 7️⃣ Show branch-wise average marks
+SELECT branch, AVG(marks) AS avg_marks
+FROM students
+GROUP BY branch;
+
+-- 8️⃣ Show branches having more than 2 students
+SELECT branch, COUNT(*) AS total_students
+FROM students
+GROUP BY branch
+HAVING COUNT(*) > 2;
+
+-- 9️⃣ Show students who scored above average marks
+SELECT *
+FROM students
+WHERE marks > (SELECT AVG(marks) FROM students);
+
+-- 🔟 Show second highest marks
+SELECT MAX(marks)
+FROM students
+WHERE marks < (SELECT MAX(marks) FROM students);
