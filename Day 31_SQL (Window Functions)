@@ -1,0 +1,70 @@
+-- Q1: Show employee name, salary and row number based on salary (highest first)
+SELECT name, salary,
+       ROW_NUMBER() OVER (ORDER BY salary DESC) AS row_num
+FROM employees;
+
+
+-- Q2: Rank employees based on salary (highest first)
+SELECT name, salary,
+       RANK() OVER (ORDER BY salary DESC) AS salary_rank
+FROM employees;
+
+
+-- Q3: Dense rank employees based on salary
+SELECT name, salary,
+       DENSE_RANK() OVER (ORDER BY salary DESC) AS dense_salary_rank
+FROM employees;
+
+
+-- Q4: Find highest paid employee in each department
+SELECT *
+FROM (
+    SELECT name, salary, department_id,
+           ROW_NUMBER() OVER (PARTITION BY department_id ORDER BY salary DESC) AS rn
+    FROM employees
+) t
+WHERE rn = 1;
+
+
+-- Q5: Find top 2 highest paid employees in each department
+SELECT *
+FROM (
+    SELECT name, salary, department_id,
+           DENSE_RANK() OVER (PARTITION BY department_id ORDER BY salary DESC) AS dr
+    FROM employees
+) t
+WHERE dr <= 2;
+
+
+-- Q6: Show previous employee salary (based on salary order)
+SELECT name, salary,
+       LAG(salary) OVER (ORDER BY salary) AS prev_salary
+FROM employees;
+
+
+-- Q7: Show next employee salary (based on salary order)
+SELECT name, salary,
+       LEAD(salary) OVER (ORDER BY salary) AS next_salary
+FROM employees;
+
+
+-- Q8: Show salary difference with previous employee
+SELECT name, salary,
+       salary - LAG(salary) OVER (ORDER BY salary) AS salary_diff
+FROM employees;
+
+
+-- Q9: Show cumulative salary (running total)
+SELECT name, salary,
+       SUM(salary) OVER (ORDER BY salary) AS running_total
+FROM employees;
+
+
+-- Q10: Find employees earning above department average
+SELECT name, salary, department_id
+FROM (
+    SELECT name, salary, department_id,
+           AVG(salary) OVER (PARTITION BY department_id) AS dept_avg
+    FROM employees
+) t
+WHERE salary > dept_avg;
