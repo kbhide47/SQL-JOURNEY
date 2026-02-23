@@ -1,0 +1,70 @@
+-- Q1: Create a table with PRIMARY KEY constraint
+CREATE TABLE students (
+    id INT PRIMARY KEY,
+    name VARCHAR(50),
+    age INT
+);
+
+
+-- Q2: Create a table with NOT NULL constraint
+CREATE TABLE employees (
+    id INT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    salary INT
+);
+
+
+-- Q3: Create a table with UNIQUE constraint
+CREATE TABLE users (
+    id INT PRIMARY KEY,
+    email VARCHAR(100) UNIQUE,
+    password VARCHAR(100)
+);
+
+
+-- Q4: Create a table with DEFAULT constraint
+CREATE TABLE orders (
+    order_id INT PRIMARY KEY,
+    order_date DATE DEFAULT CURRENT_DATE
+);
+
+
+-- Q5: Create a table with CHECK constraint
+CREATE TABLE products (
+    product_id INT PRIMARY KEY,
+    price INT CHECK (price > 0)
+);
+
+
+-- Q6: Create table with FOREIGN KEY constraint
+CREATE TABLE departments (
+    dept_id INT PRIMARY KEY,
+    dept_name VARCHAR(50)
+);
+
+CREATE TABLE staff (
+    staff_id INT PRIMARY KEY,
+    name VARCHAR(50),
+    dept_id INT,
+    FOREIGN KEY (dept_id) REFERENCES departments(dept_id)
+);
+
+
+-- Q7: Add NOT NULL constraint to existing table
+ALTER TABLE employees
+MODIFY name VARCHAR(50) NOT NULL;
+
+
+-- Q8: Add UNIQUE constraint to existing table
+ALTER TABLE users
+ADD CONSTRAINT unique_email UNIQUE(email);
+
+
+ -- Q9: Add CHECK constraint to ensure salary is greater than 0
+ALTER TABLE employees
+ADD CONSTRAINT check_salary CHECK (salary > 0);
+
+
+-- Q10: Drop a constraint from a table (example: drop UNIQUE constraint on email)
+ALTER TABLE users
+DROP CONSTRAINT unique_email;
