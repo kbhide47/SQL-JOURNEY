@@ -1,0 +1,77 @@
+-- Q1: Create a stored procedure to show all employees
+DELIMITER //
+CREATE PROCEDURE get_all_employees()
+BEGIN
+    SELECT * FROM employees;
+END //
+DELIMITER ;
+
+
+-- Q2: Call the stored procedure
+CALL get_all_employees();
+
+
+-- Q3: Create procedure to show employees from a specific department
+DELIMITER //
+CREATE PROCEDURE get_department_employees(IN dept_name VARCHAR(50))
+BEGIN
+    SELECT *
+    FROM employees
+    WHERE department = dept_name;
+END //
+DELIMITER ;
+
+
+-- Q4: Call procedure for IT department
+CALL get_department_employees('IT');
+
+
+-- Q5: Create procedure to insert a new employee
+DELIMITER //
+CREATE PROCEDURE add_employee(
+    IN emp_id INT,
+    IN emp_name VARCHAR(50),
+    IN emp_salary INT,
+    IN emp_department VARCHAR(50)
+)
+BEGIN
+    INSERT INTO employees
+    VALUES(emp_id, emp_name, emp_salary, emp_department);
+END //
+DELIMITER ;
+
+
+-- Q6: Call procedure to insert employee
+CALL add_employee(101, 'Rahul', 60000, 'IT');
+
+
+-- Q7: Create procedure to update employee salary
+DELIMITER //
+CREATE PROCEDURE update_salary(
+    IN emp_id INT,
+    IN new_salary INT
+)
+BEGIN
+    UPDATE employees
+    SET salary = new_salary
+    WHERE id = emp_id;
+END //
+DELIMITER ;
+
+
+-- Q8: Call procedure to update salary
+CALL update_salary(101, 75000);
+
+
+-- Q9: Create procedure to delete employee
+DELIMITER //
+CREATE PROCEDURE delete_employee(IN emp_id INT)
+BEGIN
+    DELETE FROM employees
+    WHERE id = emp_id;
+END //
+DELIMITER ;
+
+
+-- Q10: Call procedure to delete employee
+CALL delete_employee(101);
