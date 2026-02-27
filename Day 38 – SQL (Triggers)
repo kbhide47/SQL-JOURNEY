@@ -1,0 +1,86 @@
+-- Q1: Create a table to store salary change logs
+CREATE TABLE salary_log (
+    emp_id INT,
+    old_salary INT,
+    new_salary INT,
+    change_date TIMESTAMP
+);
+
+
+-- Q2: Create BEFORE INSERT trigger on employees
+DELIMITER //
+CREATE TRIGGER before_employee_insert
+BEFORE INSERT ON employees
+FOR EACH ROW
+BEGIN
+    SET NEW.salary = IFNULL(NEW.salary, 30000);
+END //
+DELIMITER ;
+
+
+-- Q3: Create AFTER INSERT trigger to log employee insert
+DELIMITER //
+CREATE TRIGGER after_employee_insert
+AFTER INSERT ON employees
+FOR EACH ROW
+BEGIN
+    INSERT INTO salary_log(emp_id, old_salary, new_salary, change_date)
+    VALUES(NEW.id, NULL, NEW.salary, NOW());
+END //
+DELIMITER ;
+
+
+-- Q4: Create BEFORE UPDATE trigger to check salary is positive
+DELIMITER //
+CREATE TRIGGER before_salary_update
+BEFORE UPDATE ON employees
+FOR EACH ROW
+BEGIN
+    IF NEW.salary < 0 THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Salary cannot be negative';
+    END IF;
+END //
+DELIMITER ;
+
+
+-- Q5: Create AFTER UPDATE trigger to log salary change
+DELIMITER //
+CREATE TRIGGER after_salary_update
+AFTER UPDATE ON employees
+FOR EACH ROW
+BEGIN
+    INSERT INTO salary_log(emp_id, old_salary, new_salary, change_date)
+    VALUES(OLD.id, OLD.salary, NEW.salary, NOW());
+END //
+DELIMITER ;
+
+
+-- Q6: Create BEFORE DELETE trigger
+DELIMITER //
+CREATE TRIGGER before_employee_delete
+BEFORE DELETE ON employees
+FOR EACH ROW
+BEGIN
+    INSERT INTO salary_log(emp_id, old_salary, new_salary, change_date)
+    VALUES(OLD.id, OLD.salary, NULL, NOW());
+END //
+DELIMITER ;
+
+
+-- Q7: Show all triggers in database
+SHOW TRIGGERS;
+
+
+-- Q8: Drop a trigger
+DROP TRIGGER before_employee_insert;
+
+
+-- Q9: Insert employee to test trigger
+INSERT INTO employees VALUES (201, 'Amit', 50000, 'IT');
+
+
+-- Q10: Update salary to test trigger log
+UPDATE employees
+SET salary = 65000
+WHERE id = 201;
