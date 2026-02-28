@@ -1,0 +1,42 @@
+-- Q1: Start a transaction
+START TRANSACTION;
+
+
+-- Q2: Insert a new account
+INSERT INTO accounts VALUES (1, 'Rahul', 50000);
+
+
+-- Q3: Insert another account
+INSERT INTO accounts VALUES (2, 'Amit', 40000);
+
+
+-- Q4: Commit the transaction (save changes permanently)
+COMMIT;
+
+
+-- Q5: Start a new transaction
+START TRANSACTION;
+
+
+-- Q6: Update account balance
+UPDATE accounts
+SET balance = balance - 5000
+WHERE id = 1;
+
+
+-- Q7: Update another account balance
+UPDATE accounts
+SET balance = balance + 5000
+WHERE id = 2;
+
+
+-- Q8: Create a savepoint
+SAVEPOINT transfer_point;
+
+
+-- Q9: Rollback to savepoint if needed
+ROLLBACK TO transfer_point;
+
+
+-- Q10: Commit the final transaction
+COMMIT;
