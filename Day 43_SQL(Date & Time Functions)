@@ -1,0 +1,47 @@
+-- Q1: Show current date
+SELECT CURRENT_DATE();
+
+
+-- Q2: Show current date and time
+SELECT NOW();
+
+
+-- Q3: Extract year from hire_date
+SELECT name, YEAR(hire_date) AS hire_year
+FROM employees;
+
+
+-- Q4: Extract month from hire_date
+SELECT name, MONTH(hire_date) AS hire_month
+FROM employees;
+
+
+-- Q5: Extract day from hire_date
+SELECT name, DAY(hire_date) AS hire_day
+FROM employees;
+
+
+-- Q6: Calculate number of days employee has worked
+SELECT name, DATEDIFF(CURRENT_DATE(), hire_date) AS days_worked
+FROM employees;
+
+
+-- Q7: Add 30 days to hire_date
+SELECT name, DATE_ADD(hire_date, INTERVAL 30 DAY) AS new_date
+FROM employees;
+
+
+-- Q8: Subtract 1 year from hire_date
+SELECT name, DATE_SUB(hire_date, INTERVAL 1 YEAR) AS previous_year_date
+FROM employees;
+
+
+-- Q9: Show month name of hire_date
+SELECT name, MONTHNAME(hire_date) AS hire_month_name
+FROM employees;
+
+
+-- Q10: Show employees hired in 2023
+SELECT *
+FROM employees
+WHERE YEAR(hire_date) = 2023;
