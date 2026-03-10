@@ -1,0 +1,108 @@
+-- Q1: Create a CTE to show all employees
+WITH employee_cte AS (
+    SELECT *
+    FROM employees
+)
+SELECT *
+FROM employee_cte;
+
+
+-- Q2: Use CTE to find employees earning more than average salary
+WITH avg_salary AS (
+    SELECT AVG(salary) AS avg_sal
+    FROM employees
+)
+SELECT name, salary
+FROM employees
+WHERE salary > (SELECT avg_sal FROM avg_salary);
+
+
+-- Q3: Use CTE to calculate department-wise average salary
+WITH dept_avg AS (
+    SELECT department, AVG(salary) AS avg_salary
+    FROM employees
+    GROUP BY department
+)
+SELECT *
+FROM dept_avg;
+
+
+-- Q4: Use CTE to find employees earning more than department average
+WITH dept_avg AS (
+    SELECT department, AVG(salary) AS avg_salary
+    FROM employees
+    GROUP BY department
+)
+SELECT e.name, e.salary, e.department
+FROM employees e
+JOIN dept_avg d
+ON e.department = d.department
+WHERE e.salary > d.avg_salary;
+
+
+-- Q5: Use CTE to find highest salary in each department
+WITH dept_max AS (
+    SELECT department, MAX(salary) AS max_salary
+    FROM employees
+    GROUP BY department
+)
+SELECT e.name, e.salary, e.department
+FROM employees e
+JOIN dept_max d
+ON e.department = d.department
+WHERE e.salary = d.max_salary;
+
+
+-- Q6: Use CTE to rank employees by salary
+WITH ranked_employees AS (
+    SELECT name, salary,
+    RANK() OVER (ORDER BY salary DESC) AS salary_rank
+    FROM employees
+)
+SELECT *
+FROM ranked_employees;
+
+
+-- Q7: Use CTE to find top 3 highest paid employees
+WITH ranked_employees AS (
+    SELECT name, salary,
+    ROW_NUMBER() OVER (ORDER BY salary DESC) AS rn
+    FROM employees
+)
+SELECT name, salary
+FROM ranked_employees
+WHERE rn <= 3;
+
+
+-- Q8: Use CTE to calculate department total salary
+WITH dept_total AS (
+    SELECT department, SUM(salary) AS total_salary
+    FROM employees
+    GROUP BY department
+)
+SELECT *
+FROM dept_total;
+
+
+-- Q9: Use CTE to find employees in departments with total salary > 200000
+WITH dept_total AS (
+    SELECT department, SUM(salary) AS total_salary
+    FROM employees
+    GROUP BY department
+)
+SELECT e.name, e.department
+FROM employees e
+JOIN dept_total d
+ON e.department = d.department
+WHERE d.total_salary > 200000;
+
+
+-- Q10: Use CTE to find employees with second highest salary
+WITH ranked_salary AS (
+    SELECT name, salary,
+    DENSE_RANK() OVER (ORDER BY salary DESC) AS rnk
+    FROM employees
+)
+SELECT name, salary
+FROM ranked_salary
+WHERE rnk = 2;
