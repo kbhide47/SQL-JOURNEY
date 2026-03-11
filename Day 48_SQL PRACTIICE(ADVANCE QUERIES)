@@ -1,0 +1,61 @@
+-- Q1: Find top 5 highest paid employees
+SELECT *
+FROM employees
+ORDER BY salary DESC
+LIMIT 5;
+
+
+-- Q2: Find employees whose name starts with 'A'
+SELECT *
+FROM employees
+WHERE name LIKE 'A%';
+
+
+-- Q3: Find employees whose name ends with 'n'
+SELECT *
+FROM employees
+WHERE name LIKE '%n';
+
+
+-- Q4: Find employees working in either IT or HR department
+SELECT *
+FROM employees
+WHERE department IN ('IT', 'HR');
+
+
+-- Q5: Find employees whose salary is between 50000 and 80000
+SELECT *
+FROM employees
+WHERE salary BETWEEN 50000 AND 80000;
+
+
+-- Q6: Count number of employees in each department
+SELECT department, COUNT(*) AS total_employees
+FROM employees
+GROUP BY department;
+
+
+-- Q7: Find department with highest average salary
+SELECT department, AVG(salary) AS avg_salary
+FROM employees
+GROUP BY department
+ORDER BY avg_salary DESC
+LIMIT 1;
+
+
+-- Q8: Find employees whose salary is equal to maximum salary
+SELECT *
+FROM employees
+WHERE salary = (SELECT MAX(salary) FROM employees);
+
+
+-- Q9: Find employees whose salary is greater than minimum salary
+SELECT *
+FROM employees
+WHERE salary > (SELECT MIN(salary) FROM employees);
+
+
+-- Q10: Show employees sorted by department then salary
+SELECT *
+FROM employees
+ORDER BY department, salary DESC;
