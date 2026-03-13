@@ -1,0 +1,55 @@
+-- Q1: Find the highest salary in the company
+SELECT MAX(salary) AS highest_salary
+FROM employees;
+
+
+-- Q2: Find the lowest salary in the company
+SELECT MIN(salary) AS lowest_salary
+FROM employees;
+
+
+-- Q3: Find average salary of employees
+SELECT AVG(salary) AS average_salary
+FROM employees;
+
+
+-- Q4: Count total number of employees
+SELECT COUNT(*) AS total_employees
+FROM employees;
+
+
+-- Q5: Find total salary paid in each department
+SELECT department, SUM(salary) AS total_salary
+FROM employees
+GROUP BY department;
+
+
+-- Q6: Find department with highest average salary
+SELECT department, AVG(salary) AS avg_salary
+FROM employees
+GROUP BY department
+ORDER BY avg_salary DESC
+LIMIT 1;
+
+
+-- Q7: Find employees whose salary is above average
+SELECT name, salary
+FROM employees
+WHERE salary > (SELECT AVG(salary) FROM employees);
+
+
+-- Q8: Find employees whose name contains 'a'
+SELECT *
+FROM employees
+WHERE name LIKE '%a%';
+
+
+-- Q9: Find employees sorted by highest salary
+SELECT *
+FROM employees
+ORDER BY salary DESC;
+
+
+-- Q10: Show unique departments in company
+SELECT DISTINCT department
+FROM employees;
